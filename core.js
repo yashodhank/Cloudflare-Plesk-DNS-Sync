@@ -17,15 +17,18 @@ const logger = winston.createLogger({
   ]
 });
 
-const transporter = nodemailer.createTransport({
-  host: process.env.HOST,
-  port: 465,
-  secure: true,
-  auth: {
-    user: process.env.SENDER,
-    pass: process.env.SPASS,
-  },
-});
+let transporter;
+if (process.env.HOST && process.env.SENDER && process.env.SPASS) {
+  transporter = nodemailer.createTransport({
+    host: process.env.HOST,
+    port: 465,
+    secure: true,
+    auth: {
+      user: process.env.SENDER,
+      pass: process.env.SPASS,
+    },
+  });
+}
 
 let message = [];
 
@@ -256,6 +259,11 @@ async function monitorDomainHealth() {
 }
 
 async function sendAlertEmail(domain, message) {
+  if (!transporter) {
+    logger.warn('Email settings not configured. Skipping email.');
+    return;
+  }
+
   try {
     await transporter.sendMail({
       from: `"DNSBOT" <${process.env.SENDER}>`,
@@ -355,21 +363,7 @@ async function updateDNS() {
   await Promise.all(mergedRecords.map(updateDNSRecord));
 
   message.push(mergedRecords);
-  await sendEmail();
-}
-
-async function sendEmail() {
-  try {
-    const info = await transporter.sendMail({
-      from: `"DNSBOT" <${process.env.SENDER}>`,
-      to: process.env.EMAIL,
-      subject: `DNS updates ${new Date()}`,
-      text: message.join("\n"),
-    });
-    logger.info("Message sent:", info.messageId);
-  } catch (error) {
-    logger.error('Error sending email:', error);
-  }
+  await sendEmail(`DNS updates ${new Date()}`, message.join("\n"));
 }
 
 module.exports = {
