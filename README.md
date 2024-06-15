@@ -2,6 +2,8 @@
 
 A script to synchronize ACME TXT records between Cloudflare and Plesk and provide additional DNS management automation.
 
+# This script is still in it APLHA stage. DO NO USE IT FOR ANYTHING!
+
 ## Features
 
 - Synchronize ACME TXT records between Cloudflare and Plesk
