@@ -260,37 +260,53 @@ async function sendEmail() {
   }
 }
 
-program
-  .command('run')
-  .description('Run the DNS update process')
-  .action(() => {
-    updateDNS();
-  });
+if (require.main === module) {
+  program
+    .command('run')
+    .description('Run the DNS update process')
+    .action(() => {
+      updateDNS();
+    });
 
-program
-  .command('setup')
-  .description('Setup environment variables')
-  .action(() => {
-    require('./setup');
-  });
+  program
+    .command('setup')
+    .description('Setup environment variables')
+    .action(() => {
+      require('./setup');
+    });
 
-program
-  .command('cleanup')
-  .description('Clean up stale DNS records on Cloudflare')
-  .action(() => {
-    cleanupDNSRecords();
-  });
+  program
+    .command('cleanup')
+    .description('Clean up stale DNS records on Cloudflare')
+    .action(() => {
+      cleanupDNSRecords();
+    });
 
-program
-  .command('renew-ssl')
-  .description('Renew SSL certificates for domains on Plesk')
-  .action(async () => {
-    const domains = await grabDomainNames();
-    renewSSLCertificates(domains);
-  });
+  program
+    .command('renew-ssl')
+    .description('Renew SSL certificates for domains on Plesk')
+    .action(async () => {
+      const domains = await grabDomainNames();
+      renewSSLCertificates(domains);
+    });
 
-program.parse(process.argv);
+  program.parse(process.argv);
 
-if (process.argv.length < 3) {
-  program.outputHelp();
+  if (process.argv.length < 3) {
+    program.outputHelp();
+  }
 }
+
+module.exports = {
+  fetchWithRetry,
+  grabDomainNames,
+  grabCloudflareDomains,
+  filterDomains,
+  getDNSRecords,
+  mergeDNS,
+  updateDNSRecord,
+  renewSSLCertificates,
+  cleanupDNSRecords,
+  updateDNS,
+  sendEmail
+};
