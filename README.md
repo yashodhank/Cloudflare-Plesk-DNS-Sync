@@ -21,7 +21,7 @@ A script to synchronize ACME TXT records between Cloudflare and Plesk and provid
 
 ### Prerequisites
 
-- Node.js (v14 or higher)
+- Node.js (v16 or higher)
 - Docker (optional, for containerized deployment)
 - Certbot (for SSL certificate renewal)
 
