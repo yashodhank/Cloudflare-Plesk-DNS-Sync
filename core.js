@@ -366,6 +366,25 @@ async function updateDNS() {
   await sendEmail(`DNS updates ${new Date()}`, message.join("\n"));
 }
 
+async function sendEmail(subject, text) {
+  if (!transporter) {
+    logger.warn('Email settings not configured. Skipping email.');
+    return;
+  }
+
+  try {
+    const info = await transporter.sendMail({
+      from: `"DNSBOT" <${process.env.SENDER}>`,
+      to: process.env.EMAIL,
+      subject: subject,
+      text: text,
+    });
+    logger.info("Message sent:", info.messageId);
+  } catch (error) {
+    logger.error('Error sending email:', error);
+  }
+}
+
 module.exports = {
   fetchWithRetry,
   grabDomainNames,
@@ -381,5 +400,5 @@ module.exports = {
   backupDNSConfigurations,
   restoreDNSConfigurations,
   updateDNS,
-  sendEmail
+  sendEmail,
 };
