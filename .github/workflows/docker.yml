@@ -41,7 +41,7 @@ jobs:
       run: echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
     - name: Build and push Docker image
-      uses: docker/build-push-action@v5
+      uses: docker/build-push-action@v3
       with:
         push: true
         tags: ghcr.io/${{ github.repository_owner }}/cloudflare-plesk-dns-sync:latest
