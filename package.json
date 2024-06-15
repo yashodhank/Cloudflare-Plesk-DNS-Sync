@@ -4,11 +4,15 @@
   "description": "A script to synchronize ACME TXT records between Cloudflare and Plesk and provide additional DNS management automation.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js run",
+    "start": "node cli.js run",
     "setup": "node setup.js",
     "test": "jest",
-    "cleanup": "node index.js cleanup",
-    "renew-ssl": "node index.js renew-ssl"
+    "cleanup": "node cli.js cleanup",
+    "renew-ssl": "node cli.js renew-ssl",
+    "monitor-health": "node cli.js monitor-health",
+    "manage-settings": "node cli.js manage-settings",
+    "backup": "node cli.js backup",
+    "restore": "node cli.js restore"
   },
   "dependencies": {
     "commander": "^9.0.0",
@@ -21,5 +25,8 @@
   "license": "MIT",
   "devDependencies": {
     "jest": "^29.7.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
   }
 }
