@@ -6,16 +6,20 @@
   "scripts": {
     "start": "node index.js run",
     "setup": "node setup.js",
+    "test": "jest",
     "cleanup": "node index.js cleanup",
     "renew-ssl": "node index.js renew-ssl"
   },
   "dependencies": {
+    "commander": "^9.0.0",
     "dotenv": "^10.0.0",
     "node-fetch": "^2.6.1",
     "nodemailer": "^6.6.3",
-    "commander": "^9.0.0",
     "winston": "^3.3.3"
   },
   "author": "Yashodhan Kulkarni",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
 }
