@@ -1,7 +1,10 @@
 const fetch = require('node-fetch');
 jest.mock('node-fetch');
 
-const { grabDomainNames, grabCloudflareDomains } = require('../index');
+const {
+  grabDomainNames,
+  grabCloudflareDomains
+} = require('../core');
 
 describe('Test grabDomainNames', () => {
   it('should fetch domain names from Plesk', async () => {

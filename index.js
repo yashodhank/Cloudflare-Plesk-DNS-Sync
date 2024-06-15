@@ -1,9 +1,10 @@
+// core.js
 const fetch = require('node-fetch');
 const dotenv = require('dotenv');
 const nodemailer = require('nodemailer');
 const winston = require('winston');
-const { program } = require('commander');
 const { exec } = require('child_process');
+
 dotenv.config();
 
 const logger = winston.createLogger({
@@ -257,43 +258,6 @@ async function sendEmail() {
     logger.info("Message sent:", info.messageId);
   } catch (error) {
     logger.error('Error sending email:', error);
-  }
-}
-
-if (require.main === module) {
-  program
-    .command('run')
-    .description('Run the DNS update process')
-    .action(() => {
-      updateDNS();
-    });
-
-  program
-    .command('setup')
-    .description('Setup environment variables')
-    .action(() => {
-      require('./setup');
-    });
-
-  program
-    .command('cleanup')
-    .description('Clean up stale DNS records on Cloudflare')
-    .action(() => {
-      cleanupDNSRecords();
-    });
-
-  program
-    .command('renew-ssl')
-    .description('Renew SSL certificates for domains on Plesk')
-    .action(async () => {
-      const domains = await grabDomainNames();
-      renewSSLCertificates(domains);
-    });
-
-  program.parse(process.argv);
-
-  if (process.argv.length < 3) {
-    program.outputHelp();
   }
 }
 
