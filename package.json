@@ -1,10 +1,10 @@
 {
-  "name": "Cloudflare-Plesk-DNS-Sync",
+  "name": "cloudflare-plesk-dns-sync",
   "version": "1.0.0",
-  "description": "A script to synchronize ACME TXT records between Cloudflare <-> Plesk & do more..",
+  "description": "A script to synchronize ACME TXT records between Cloudflare and Plesk and provide additional DNS management automation.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node index.js run",
     "setup": "node setup.js",
     "cleanup": "node index.js cleanup",
     "renew-ssl": "node index.js renew-ssl"
@@ -16,6 +16,6 @@
     "commander": "^9.0.0",
     "winston": "^3.3.3"
   },
-  "author": "Your Name",
+  "author": "Yashodhan Kulkarni",
   "license": "MIT"
 }
